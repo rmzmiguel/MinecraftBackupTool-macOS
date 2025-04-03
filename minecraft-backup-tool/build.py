@@ -37,17 +37,25 @@ def build_app():
 
     # Config extra para macOS
     if sys.platform == "darwin":
-        cmd.append("--osx-bundle-identifier=com.minecraftbackuptool")
-        cmd.append("--target-arch=universal2")  # Binario universal para Intel y ARM
+        cmd.extend([
+            "--osx-bundle-identifier=com.minecraftbackuptool",
+            "--target-arch=universal2",  # Binario universal para Intel y ARM
+            "--hidden-import=tkinter",  # Asegura que tkinter se empaquete correctamente
+        ])
 
     try:
         result = subprocess.run(cmd, check=True, capture_output=True, text=True)
         print("\n✅ Build successful!")
+        print(f"PyInstaller stdout: {result.stdout}")
+        print(f"PyInstaller stderr: {result.stderr}")
 
         if sys.platform == "win32":
             print(f"🪟 Executable created at: dist/MinecraftBackupTool.exe")
         elif sys.platform == "darwin":
             print(f"🍎 App created at: dist/MinecraftBackupTool.app")
+            # Mostrar la estructura del bundle para depuración
+            print("📂 Bundle structure:")
+            subprocess.run(["ls", "-R", "dist/MinecraftBackupTool.app"])
         else:
             print("🛠️ Executable created in dist/")
 
