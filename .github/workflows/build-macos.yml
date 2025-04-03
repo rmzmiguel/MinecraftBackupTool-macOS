@@ -31,7 +31,7 @@ jobs:
           zip -r output/MinecraftBackupTool.app.zip dist/MinecraftBackupTool.app
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: MinecraftBackupTool-macOS
           path: output/MinecraftBackupTool.app.zip
