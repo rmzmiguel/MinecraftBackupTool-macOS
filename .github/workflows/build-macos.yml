@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-12  # ¡Clave aquí!
 
     steps:
       - name: Checkout code
@@ -35,5 +35,3 @@ jobs:
         with:
           name: MinecraftBackupTool-macOS
           path: output/MinecraftBackupTool.app.zip
-
-
