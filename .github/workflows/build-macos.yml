@@ -10,6 +10,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: List files in working directory
+        run: |
+          pwd
+          ls -la
+          find . -type f
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,6 +32,10 @@ jobs:
 
       - name: Build the app
         run: |
+          if [ ! -f "build.py" ]; then
+            echo "Error: build.py not found!"
+            exit 1
+          fi
           python build.py
 
       - name: Check if app exists
