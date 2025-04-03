@@ -43,6 +43,12 @@ jobs:
         run: |
           python build.py
 
+      - name: Fix executable permissions
+        working-directory: minecraft-backup-tool
+        run: |
+          chmod +x dist/MinecraftBackupTool.app/Contents/MacOS/MinecraftBackupTool
+          ls -la dist/MinecraftBackupTool.app/Contents/MacOS/
+
       - name: Check if app exists
         working-directory: minecraft-backup-tool
         run: |
