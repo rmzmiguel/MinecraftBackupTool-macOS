@@ -18,6 +18,13 @@ jobs:
           pwd
           ls -la
           find . -type f
+          if [ ! -d "minecraft-backup-tool" ]; then echo "Error: minecraft-backup-tool folder not found!"; exit 1; fi
+          cd minecraft-backup-tool
+          pwd
+          ls -la
+          if [ ! -f "build.py" ]; then echo "Error: build.py not found!"; exit 1; fi
+          if [ ! -f "main.py" ]; then echo "Error: main.py not found!"; exit 1; fi
+          if [ ! -d "resources" ]; then echo "Error: resources folder not found!"; exit 1; fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -25,20 +32,19 @@ jobs:
           python-version: 3.11
 
       - name: Install dependencies
+        working-directory: minecraft-backup-tool
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
           if [ -f "requirements.txt" ]; then pip install -r requirements.txt; fi
 
       - name: Build the app
+        working-directory: minecraft-backup-tool
         run: |
-          if [ ! -f "build.py" ]; then
-            echo "Error: build.py not found!"
-            exit 1
-          fi
           python build.py
 
       - name: Check if app exists
+        working-directory: minecraft-backup-tool
         run: |
           ls -la dist/
           if [ ! -d "dist/MinecraftBackupTool.app" ]; then
@@ -47,6 +53,7 @@ jobs:
           fi
 
       - name: Create ZIP
+        working-directory: minecraft-backup-tool
         run: |
           mkdir output
           zip -r output/MinecraftBackupTool.app.zip dist/MinecraftBackupTool.app
@@ -55,4 +62,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MinecraftBackupTool-macOS
-          path: output/MinecraftBackupTool.app.zip
+          path: minecraft-backup-tool/output/MinecraftBackupTool.app.zip
