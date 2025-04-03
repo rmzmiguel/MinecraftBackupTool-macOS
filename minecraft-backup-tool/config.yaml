@@ -1,0 +1,16 @@
+# Configuración para Minecraft Backup Tool
+
+# Proveedores habilitados
+providers:
+  java: true      # Minecraft Java Edition
+  bedrock: true   # Minecraft Bedrock Edition
+  prism_launcher: false  # Prism Launcher (opcional)
+
+# Rutas personalizadas para buscar mundos
+custom_paths:
+  java: []
+  bedrock: []
+  prism: []
+
+# Plugins adicionales (rutas a archivos Python)
+plugins: []
